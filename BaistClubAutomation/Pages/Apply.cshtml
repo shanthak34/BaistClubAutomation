@@ -1,0 +1,43 @@
+﻿@page
+@model BaistClubAutomation.Pages.ApplyModel
+@{
+    ViewData["Title"] = "Apply for Membership";
+}
+
+<div class="container mt-4">
+    <h2>Membership Application</h2>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Applicant.FirstName" class="form-label">First Name</label>
+                <input asp-for="Applicant.FirstName" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="Applicant.LastName" class="form-label">Last Name</label>
+                <input asp-for="Applicant.LastName" class="form-control" />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Applicant.Email" class="form-label">Email</label>
+            <input asp-for="Applicant.Email" class="form-control" type="email" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Applicant.DesiredTier" class="form-label">Membership Tier</label>
+            <select asp-for="Applicant.DesiredTier" class="form-select">
+                <option value="Gold">Gold</option>
+                <option value="Silver">Silver</option>
+                <option value="Bronze">Bronze</option>
+                <option value="Copper">Copper</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Applicant.SponsorId" class="form-label">Sponsor Member ID</label>
+            <input asp-for="Applicant.SponsorId" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+    </form>
+</div>
