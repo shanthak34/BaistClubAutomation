@@ -1,0 +1,38 @@
+﻿@page
+@model BaistClubAutomation.Pages.ProcessApplicationModel
+@{
+    ViewData["Title"] = "Process Application";
+}
+<div class="container mt-4">
+    <h2 class="text-success">Reviewing: @Model.Applicant.FirstName @Model.Applicant.LastName</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Email:</strong> @Model.Applicant.Email</p>
+            <p><strong>Desired Tier:</strong> @Model.Applicant.DesiredTier</p>
+            <p><strong>Sponsor ID:</strong> @Model.Applicant.SponsorID</p>
+        </div>
+        <div class="col-md-6">
+            <form method="post">
+                <input type="hidden" asp-for="Applicant.ApplicantId" />
+
+                <div class="mb-3">
+                    <label class="form-label">Decision</label>
+                    <select name="status" class="form-select" required>
+                        <option value="Approved">Approve</option>
+                        <option value="Rejected">Reject</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Reviewer Notes</label>
+                    <textarea name="notes" class="form-control" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 shadow">Submit Final Decision</button>
+                <a asp-page="/Review" class="btn btn-secondary w-100 mt-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

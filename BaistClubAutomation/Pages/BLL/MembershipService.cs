@@ -23,6 +23,16 @@ namespace BaistClubAutomation.Pages.BLL
             // or you can query directly if the context is available here.
             return _manager.GetPendingApplications();
         }
+        public bool FinalizeApplication(int id, string status, string notes)
+        {
+            // The Service calls the Manager to do the actual database work
+            return _manager.FinalizeApplication(id, status, notes);
+        }
+        public ProspectiveMember GetApplicantById(int id)
+        {
+            // The BLL asks the Manager for the specific data
+            return _manager.GetApplicantById(id);
+        }
 
         // Added for Search Requirement
         public Member FindMember(int id)

@@ -35,12 +35,19 @@ namespace BaistClubAutomation.Pages.Manager
                            .Where(a => a.ApplicationStatus == "Pending")
                            .ToList();
         }
+       
         public int GenerateNewNumber()
         {
-            // Finds the highest current member number and adds 1
-            // If no members exist, starts at 1000
-            int maxNumber = _context.Members.Max(m => (int?)m.MemberNumber) ?? 1000;
-            return maxNumber + 1;
+            // If the table is empty, .Max() will return null. The ?? 1000 starts your IDs at 1001.
+            int maxId = _context.Members.Select(m => (int?)m.MemberNumber).Max() ?? 1000;
+            return maxId + 1;
+        }
+        public ProspectiveMember GetApplicantById(int id)
+        {
+            // Uses Entity Framework's Find method to locate the record by Primary Key
+            // Returns null if the ID does not exist in the database
+            var applicant = _context.ProspectiveMembers.Find(id);
+            return applicant;
         }
         public bool FinalizeApplication(int id, string status, string notes)
         {
