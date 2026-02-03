@@ -17,6 +17,12 @@ namespace BaistClubAutomation.Pages.BLL
 
             return _manager.AddProspectiveMember(applicant);
         }
+        public List<ProspectiveMember> GetPendingApplications()
+        {
+            // This assumes your manager has a way to query the context 
+            // or you can query directly if the context is available here.
+            return _manager.GetPendingApplications();
+        }
 
         // Added for Search Requirement
         public Member FindMember(int id)

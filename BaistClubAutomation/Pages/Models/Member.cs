@@ -5,8 +5,10 @@ namespace BaistClubAutomation.Pages.Models
 {
     public class Member
     {
+
         [Key]
-        public int MemberId { get; set; } 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] // MemberNumber is assigned, not identity
+        public int MemberNumber { get; set; }
 
         [Required, StringLength(50)]
         public string FirstName { get; set; } 
@@ -17,7 +19,7 @@ namespace BaistClubAutomation.Pages.Models
         [Required, EmailAddress, StringLength(100)]
         public string Email { get; set; } 
 
-        public string MembershipTier { get; set; } 
+       
 
         public bool IsShareholder { get; set; } 
 
@@ -28,7 +30,16 @@ namespace BaistClubAutomation.Pages.Models
         [Column(TypeName = "decimal(4,1)")]
         public decimal HandicapIndex { get; set; } 
 
-        public DateTime UpdatedAt { get; set; } = DateTime.Now; 
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+       
+
+           
+
+            [Required, StringLength(50)]
+            public string MembershipType { get; set; } = string.Empty; // Gold, Silver, Bronze, etc.
+
+           
+        }
     }
-}
+
 

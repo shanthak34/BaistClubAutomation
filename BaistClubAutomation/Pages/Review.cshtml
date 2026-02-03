@@ -1,0 +1,33 @@
+﻿@page
+@model BaistClubAutomation.Pages.ReviewModel
+@{
+    ViewData["Title"] = "Application Review";
+}
+
+
+<div class="container mt-4">
+    <h2>Pending Membership Applications</h2>
+    <table class="table table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Tier</th>
+                <th>Applied Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var app in Model.PendingApplications)
+            {
+                <tr>
+                    <td>@app.LastName, @app.FirstName</td>
+                    <td>@app.DesiredTier</td>
+                    <td>@app.ApplicationDate.ToShortDateString()</td>
+                    <td>
+                        <a asp-page="/ProcessApplication" asp-route-id="@app.ApplicantId" class="btn btn-sm btn-primary">Process</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
