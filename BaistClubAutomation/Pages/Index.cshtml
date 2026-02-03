@@ -1,10 +1,44 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Welcome to Club BAIST";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm border">
+        <div class="container-fluid py-5 text-center">
+            <h1 class="display-4 fw-bold text-success">Club BAIST</h1>
+            <p class="col-md-12 fs-4 text-muted">
+                Experience excellence at Alberta's premier exclusive private golf club.
+                Founded in 1996, our 18-hole championship course offers a challenge for golfers of all levels.
+            </p>
+            <div class="mt-4">
+                <a asp-page="/Apply" class="btn btn-success btn-lg px-5 shadow">Become a Member</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+        <div class="col-md-4">
+            <div class="h-100 p-4 bg-white border rounded-3 shadow-sm text-center">
+                <h2 class="h4">Membership</h2>
+                <p>Join an exclusive community with tiered membership options including Gold, Silver, and Bronze packages tailored to your playing schedule.</p>
+                <a asp-page="/Apply" class="btn btn-outline-success">Register</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="h-100 p-4 bg-white border rounded-3 shadow-sm text-center">
+                <h2 class="h4">Tee Times</h2>
+                <p>Book your next round up to one week in advance. Our automated system ensures fair access with 8-minute intervals for all members.</p>
+                <button class="btn btn-outline-secondary" disabled>Demo</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="h-100 p-4 bg-white border rounded-3 shadow-sm text-center">
+                <h2 class="h4">Player Scoring</h2>
+                <p>Track your performance and handicap index following World Handicapping System (WHS) guidelines with our integrated scoring portal.</p>
+                <button class="btn btn-outline-secondary" disabled>Demo</button>
+            </div>
+        </div>
+    </div>
 </div>
