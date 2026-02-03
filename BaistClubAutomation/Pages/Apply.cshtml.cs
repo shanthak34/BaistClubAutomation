@@ -1,47 +1,62 @@
-using BaistClubAutomation.Pages.BLL;
-using BaistClubAutomation.Pages.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using BaistClubAutomation.Pages.Models;
+using BaistClubAutomation.Pages.BLL;
 
 namespace BaistClubAutomation.Pages
 {
     public class ApplyModel : PageModel
     {
-        public void OnGet()
-        {
-        }
         private readonly MembershipService _membershipService;
 
-        // Constructor: The BLL is automatically "injected" here from Step 5
+        // Dependency Injection: The UI Tier only talks to the BLL
         public ApplyModel(MembershipService membershipService)
         {
             _membershipService = membershipService;
         }
 
         [BindProperty]
-        public ProspectiveMember Applicant { get; set; }
+        public ProspectiveMember? Applicant { get; set; }
 
-      
+        public string Message { get; set; } = string.Empty;
+
+        public void OnGet()
+        {
+            // Initializes the form on the first load
+            Applicant = new ProspectiveMember();
+        }
 
         public IActionResult OnPost()
         {
+            // 1. Validate the UI Tier Input
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            // Step: Call the BLL (Service) to handle the application
-            bool success = _membershipService.SubmitApplication(Applicant);
+            if (Applicant == null) return Page();
 
-            if (success)
+            // 2. Call the BLL Tier to process business rules and persistence
+            bool isSuccess = _membershipService.SubmitApplication(Applicant);
+
+            if (isSuccess)
             {
-                // Redirect to a simple success page or home
-                return RedirectToPage("/Index");
+                // Clear the form and redirect or show success
+                return RedirectToPage("/Index", new { message = "Application Submitted Successfully!" });
             }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while saving. Please check your data.");
+                return Page();
+            }
+        }
 
-            ModelState.AddModelError(string.Empty, "Error: Could not submit application.");
+        // Handler for the Reset Button (Requirement: Allow more than one execution)
+        public IActionResult OnPostReset()
+        {
+            ModelState.Clear();
+            Applicant = new ProspectiveMember();
             return Page();
         }
     }
 }
-

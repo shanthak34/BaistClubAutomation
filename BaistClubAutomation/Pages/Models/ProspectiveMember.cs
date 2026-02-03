@@ -8,30 +8,43 @@ namespace BaistClubAutomation.Pages.Models
         public int ApplicantId { get; set; }
 
         [Required, StringLength(50)]
-        public string FirstName { get; set; } 
+        public string FirstName { get; set; }
 
         [Required, StringLength(50)]
-        public string LastName { get; set; } 
+        public string LastName { get; set; }
 
         [Required, EmailAddress, StringLength(100)]
-        public string Email { get; set; } 
+        public string Email { get; set; }
 
-        [Phone, StringLength(20)]
-        public string Phone { get; set; } 
+        [Required, Phone, StringLength(20)]
+        public string Phone { get; set; }
 
-        [StringLength(200)]
-        public string Address { get; set; } 
+        [Required, StringLength(200)]
+        public string Address { get; set; }
 
-        public string DesiredTier { get; set; } 
+        [Required, StringLength(10)]
+        public string PostalCode { get; set; }
+        [Required(ErrorMessage = "Please select a membership category")]
+        public string DesiredTier { get; set; }
 
-        public int SponsorId { get; set; } 
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; } // Required for age-based categories (Pee Wee, Junior, etc.)
+
+        [StringLength(100)]
+        public string Occupation { get; set; }
+
+        [StringLength(100)]
+        public string CompanyName { get; set; }
+
+        public int SponsorID { get; set; } // Required for private club referral logic
 
         public DateTime ApplicationDate { get; set; } = DateTime.Now;
 
-        public string ApplicationStatus { get; set; } = "Pending"; 
+        public string ApplicationStatus { get; set; } = "Pending";
 
         public DateTime? CommitteeReviewDate { get; set; }
 
-        public string ApprovalNotes { get; set; } 
+        public string? ApprovalNotes { get; set; }
     }
 }

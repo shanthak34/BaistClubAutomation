@@ -1,43 +1,116 @@
 ﻿@page
 @model BaistClubAutomation.Pages.ApplyModel
 @{
-    ViewData["Title"] = "Apply for Membership";
+    ViewData["Title"] = "Membership Application";
 }
 
 <div class="container mt-4">
-    <h2>Membership Application</h2>
-    <form method="post">
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label asp-for="Applicant.FirstName" class="form-label">First Name</label>
-                <input asp-for="Applicant.FirstName" class="form-control" />
-            </div>
-            <div class="col-md-6 mb-3">
-                <label asp-for="Applicant.LastName" class="form-label">Last Name</label>
-                <input asp-for="Applicant.LastName" class="form-control" />
-            </div>
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">Club BAIST Membership Application</h3>
         </div>
+        <div class="card-body">
+            <p class="text-muted">Please provide complete information for your membership request.</p>
+            <hr />
 
-        <div class="mb-3">
-            <label asp-for="Applicant.Email" class="form-label">Email</label>
-            <input asp-for="Applicant.Email" class="form-control" type="email" />
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <h5 class="text-primary">Personal Details</h5>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Applicant.FirstName" class="form-label">First Name</label>
+                        <input asp-for="Applicant.FirstName" class="form-control" />
+                        <span asp-validation-for="Applicant.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Applicant.LastName" class="form-label">Last Name</label>
+                        <input asp-for="Applicant.LastName" class="form-control" />
+                        <span asp-validation-for="Applicant.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <label asp-for="Applicant.Address" class="form-label">Street Address</label>
+                        <input asp-for="Applicant.Address" class="form-control" />
+                        <span asp-validation-for="Applicant.Address" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Applicant.PostalCode" class="form-label">Postal Code</label>
+                        <input asp-for="Applicant.PostalCode" class="form-control" placeholder="T6X 2Y1" />
+                        <span asp-validation-for="Applicant.PostalCode" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label asp-for="Applicant.Phone" class="form-label">Phone Number</label>
+                        <input asp-for="Applicant.Phone" class="form-control" type="tel" />
+                        <span asp-validation-for="Applicant.Phone" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Applicant.Email" class="form-label">Email Address</label>
+                        <input asp-for="Applicant.Email" class="form-control" type="email" />
+                        <span asp-validation-for="Applicant.Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Applicant.DesiredTier" class="form-label">Membership Category</label>
+                    <select asp-for="Applicant.DesiredTier" class="form-select">
+                        <option value="">-- Select a Category --</option>
+                        <option value="Gold">Gold (Anytime access)</option>
+                        <option value="Silver">Silver (Restricted hours)</option>
+                        <option value="Bronze">Bronze (Highly restricted hours)</option>
+                        <option value="Shareholder">Shareholder</option>
+                        <option value="Associate">Associate</option>
+                        <option value="Intermediate">Intermediate (Age 18-24)</option>
+                        <option value="Junior">Junior (Age 12-17)</option>
+                        <option value="Pee Wee">Pee Wee (Age 6-11)</option>
+                    </select>
+                    <span asp-validation-for="Applicant.DesiredTier" class="text-danger"></span>
+                </div>
+
+                <h5 class="text-primary">Professional & Club Details</h5>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Applicant.Occupation" class="form-label">Occupation</label>
+                        <input asp-for="Applicant.Occupation" class="form-control" />
+                        <span asp-validation-for="Applicant.Occupation" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Applicant.CompanyName" class="form-label">Company Name</label>
+                        <input asp-for="Applicant.CompanyName" class="form-control" />
+                        <span asp-validation-for="Applicant.CompanyName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label asp-for="Applicant.DateOfBirth" class="form-label">Date of Birth</label>
+                        <input asp-for="Applicant.DateOfBirth" class="form-control" type="date" />
+                        <span asp-validation-for="Applicant.DateOfBirth" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Applicant.SponsorID" class="form-label">Sponsor Member ID</label>
+                        <input asp-for="Applicant.SponsorID" class="form-control" />
+                        <span asp-validation-for="Applicant.SponsorID" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between border-top pt-3">
+                    <div>
+                        <button type="submit" class="btn btn-primary px-4 me-2">Submit Application</button>
+
+                        <button type="submit" asp-page-handler="Reset" class="btn btn-outline-secondary" formnovalidate>Reset Form</button>
+                    </div>
+                    <a asp-page="/Index" class="btn btn-danger">Cancel</a>
+                </div>
+            </form>
         </div>
-
-        <div class="mb-3">
-            <label asp-for="Applicant.DesiredTier" class="form-label">Membership Tier</label>
-            <select asp-for="Applicant.DesiredTier" class="form-select">
-                <option value="Gold">Gold</option>
-                <option value="Silver">Silver</option>
-                <option value="Bronze">Bronze</option>
-                <option value="Copper">Copper</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Applicant.SponsorId" class="form-label">Sponsor Member ID</label>
-            <input asp-for="Applicant.SponsorId" class="form-control" />
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit Application</button>
-    </form>
+    </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
