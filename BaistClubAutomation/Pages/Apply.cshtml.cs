@@ -21,10 +21,7 @@ namespace BaistClubAutomation.Pages
         [BindProperty]
         public ProspectiveMember Applicant { get; set; }
 
-        public void OnGet()
-        {
-            // Runs when the user first visits the page
-        }
+      
 
         public IActionResult OnPost()
         {

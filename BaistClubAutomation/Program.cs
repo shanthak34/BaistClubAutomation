@@ -1,6 +1,7 @@
 using BaistClubAutomation.Pages.BLL;
 using BaistClubAutomation.Pages.Data;
 using BaistClubAutomation.Pages.Manager;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

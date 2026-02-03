@@ -10,14 +10,29 @@ namespace BaistClubAutomation.Pages.BLL
 
         public bool SubmitApplication(ProspectiveMember applicant)
         {
-            // Business Logic: Force status to Pending
             applicant.ApplicationStatus = "Pending";
             applicant.ApplicationDate = DateTime.Now;
 
-            // Business Logic: Validation
             if (string.IsNullOrEmpty(applicant.Email)) return false;
 
             return _manager.AddProspectiveMember(applicant);
+        }
+
+        // Added for Search Requirement
+        public Member FindMember(int id)
+        {
+            if (id <= 0) return null;
+            return _manager.GetMember(id);
+        }
+
+        // Added for Update Requirement
+        public bool UpdateMemberDetails(Member member)
+        {
+            if (member == null) return false;
+            // Business Rule: Ensure status remains Active during standard updates
+            if (string.IsNullOrEmpty(member.Status)) member.Status = "Active";
+
+            return _manager.UpdateMember(member);
         }
     }
 }
