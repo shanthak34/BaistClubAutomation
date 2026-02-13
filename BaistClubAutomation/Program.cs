@@ -12,6 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<MembershipManager>();
 builder.Services.AddScoped<MembershipService>();
+builder.Services.AddScoped<TeeTimeManager>();
+builder.Services.AddScoped<TeeTimeService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
