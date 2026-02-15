@@ -1,0 +1,52 @@
+﻿@page
+@model BaistClubAutomation.Pages.BookTeeTimeModel
+@{
+}
+<div class="container mt-4">
+    <h2 class="text-success border-bottom pb-2">Reserve a Tee Time</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 shadow p-4 bg-white rounded">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Booking.MemberNumber" class="form-label">Member Number</label>
+                    <input asp-for="Booking.MemberNumber" class="form-control" placeholder="Enter your ID" required />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Booking.ReservationDate" class="form-label">Date of Play</label>
+                    <input asp-for="Booking.ReservationDate" type="date" class="form-control"
+                           min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Booking.ReservationTime" class="form-label">Available 8-Minute Slots</label>
+                    <select asp-for="Booking.ReservationTime" class="form-select" required>
+                        <option value="">-- Select a Time --</option>
+                        @foreach (var slot in Model.AvailableSlots)
+                        {
+                            <option value="@slot">@DateTime.Today.Add(slot).ToString("hh:mm tt")</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Booking.NumberOfPlayers" class="form-label">Number of Players</label>
+                    <select asp-for="Booking.NumberOfPlayers" class="form-select">
+                        <option value="1">1 Player</option>
+                        <option value="2">2 Players</option>
+                        <option value="3">3 Players</option>
+                        <option value="4">4 Players</option>
+                    </select>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input asp-for="Booking.IsCartRequired" class="form-check-input" type="checkbox">
+                    <label asp-for="Booking.IsCartRequired" class="form-check-label">Power Cart Required?</label>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 py-2 fw-bold">Confirm Reservation</button>
+            </form>
+        </div>
+    </div>
+</div>

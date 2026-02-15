@@ -67,12 +67,20 @@ namespace BaistClubAutomation.Pages.Manager
                     FirstName = applicant.FirstName,
                     LastName = applicant.LastName,
                     MembershipType = applicant.DesiredTier,
-                    Status = "Active"
+                    Email=applicant.Email,
+                    Status = "Active",
+                    JoinDate = DateTime.Now,
+                    UpdatedAt = DateTime.Now
                 };
                 _context.Members.Add(newMember);
             }
 
             return _context.SaveChanges() > 0;
+        }
+        public Member? GetMemberByNumber(int memberNumber)
+        {
+            // Uses FirstOrDefault to return the member or null if not found
+            return _context.Members.FirstOrDefault(m => m.MemberNumber == memberNumber);
         }
     }
 }
