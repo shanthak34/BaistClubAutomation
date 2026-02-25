@@ -14,7 +14,7 @@ namespace BaistClubAutomation.Pages.Data
         public DbSet<ProspectiveMember> ProspectiveMembers { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Member> Members { get; set; }
-
+        public DbSet<Score> Scores { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

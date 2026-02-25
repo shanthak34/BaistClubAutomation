@@ -1,0 +1,36 @@
+﻿@page
+@model BaistClubAutomation.Pages.HandicapHistoryModel
+@{
+}
+
+
+<div class="container">
+    <h2>Member Handicap Index Report</h2>
+    <div class="alert alert-info">
+        <strong>Current Handicap Index:</strong> @Model.CurrentHandicapIndex
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Course</th>
+                <th>Tee</th>
+                <th>Gross Score</th>
+                <th>Differential</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var score in Model.MemberScores)
+            {
+                <tr>
+                    <td>@score.DatePlayed.ToShortDateString()</td>
+                    <td>@score.GolfCourse</td>
+                    <td>@score.TeeColor</td>
+                    <td>@score.TotalGrossScore</td>
+                    <td>@score.HandicapDifferential</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,27 @@
+﻿@page
+@model BaistClubAutomation.Pages.RecordScoreModel
+@{
+}
+<form method="post">
+    <div class="form-group">
+        <label>Member Number</label>
+        <input asp-for="NewScore.MemberNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Date Played</label>
+        <input asp-for="NewScore.DatePlayed" type="date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Tee Played</label>
+        <select asp-for="NewScore.TeeColor" class="form-control">
+            <option value="Blue">Blue (Men: 70.9 / 127)</option>
+            <option value="White">White (Men: 68.8 / 123)</option>
+            <option value="Red">Red (Men: 66.2 / 116)</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Total Gross Score</label>
+        <input asp-for="NewScore.TotalGrossScore" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Record Score</button>
+</form>

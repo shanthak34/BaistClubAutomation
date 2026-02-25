@@ -4,7 +4,13 @@
 }
 <div class="container mt-4">
     <h2 class="text-success border-bottom pb-2">Reserve a Tee Time</h2>
-
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger shadow-sm border-start border-4 border-danger">
+            <h4 class="alert-heading">Booking Error</h4>
+            <div asp-validation-summary="All" class="mb-0"></div>
+        </div>
+    }
     <div class="row justify-content-center">
         <div class="col-md-6 shadow p-4 bg-white rounded">
             <form method="post">

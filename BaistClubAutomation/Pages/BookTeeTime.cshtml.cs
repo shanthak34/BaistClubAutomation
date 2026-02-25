@@ -34,8 +34,16 @@ namespace BaistClubAutomation.Pages
                 return Page();
             }
 
+            
             bool success = _teeTimeService.MakeReservation(Booking);
+            if (success)
+            {
+                TempData["Message"] = "Reservation confirmed!";
+                return RedirectToPage("/Index");
+            }
             return success ? RedirectToPage("/Index") : Page();
         }
+
+       
     }
 }
