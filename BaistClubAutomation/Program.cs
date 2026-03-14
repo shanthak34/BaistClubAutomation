@@ -17,6 +17,10 @@ builder.Services.AddScoped<TeeTimeService>();
 // Register Data Access Layer (DAL)
 builder.Services.AddScoped<ScoreManager>();
 
+builder.Services.AddScoped<BaistClubAutomation.Pages.Manager.IScoreManager, BaistClubAutomation.Pages.Manager.ScoreManager>();
+
+
+builder.Services.AddScoped<BaistClubAutomation.Pages.BLL.IScoringService, BaistClubAutomation.Pages.BLL.ScoringService>();
 // Register Business Logic Layer (BLL)
 builder.Services.AddScoped<ScoringService>();
 var app = builder.Build();
