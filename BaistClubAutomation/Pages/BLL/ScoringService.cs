@@ -3,41 +3,39 @@ using BaistClubAutomation.Pages.Manager;
 
 namespace BaistClubAutomation.Pages.BLL
 {
-    public class ScoringService
+    public interface IScoringService
     {
-        private readonly ScoreManager _scoreManager;
+        bool AddPlayerScore(Score score);
+        double CalculateHandicapIndex(int memberNumber);
+    }
 
-        public ScoringService(ScoreManager scoreManager)
-        {
-            _scoreManager = scoreManager;
-        }
+    public class ScoringService : IScoringService
+    {
+        private readonly IScoreManager _scoreManager;
 
-        public double CalculateDifferential(int grossScore, double courseRating, int slopeRating)
-        {
-           // WHS Formula 
-            double differential = (grossScore - courseRating) * (113.0 / slopeRating);
-            return Math.Round(differential, 1);
-        }
+        public ScoringService(IScoreManager scoreManager) => _scoreManager = scoreManager;
 
         public bool AddPlayerScore(Score score)
         {
-            // Check if the member exists first
-            var memberExists = _scoreManager.CheckMemberExists(score.MemberNumber);
-            if (!memberExists)
-            {
-                return false; 
-            }
-            
-            score.HandicapDifferential = CalculateDifferential(score.TotalGrossScore, score.CourseRating, score.SlopeRating);
+            if (!_scoreManager.CheckMemberExists(score.MemberNumber)) return false;
+
+           
+            score.HandicapDifferential = Math.Round((score.TotalGrossScore - score.CourseRating) * (113.0 / score.SlopeRating), 1);
             return _scoreManager.AddScore(score);
         }
 
         public double CalculateHandicapIndex(int memberNumber)
         {
-            var differentials = _scoreManager.GetRecentDifferentials(memberNumber, 20);
-            if (differentials.Count < 3) return 0.0; 
+            // Retrieve the list of Score objects from the DAL
+            List<Score> scoreHistory = _scoreManager.GetRecentScores(memberNumber, 20);
 
-          
+           
+            if (scoreHistory.Count < 3) return 0.0;
+
+            
+            var differentials = scoreHistory.Select(s => s.HandicapDifferential).ToList();
+
+
             int countToTake = differentials.Count >= 20 ? 8 : (int)Math.Ceiling(differentials.Count * 0.4);
             var bestDifferentials = differentials.OrderBy(d => d).Take(countToTake);
 
@@ -45,4 +43,3 @@ namespace BaistClubAutomation.Pages.BLL
         }
     }
 }
-
