@@ -5,31 +5,54 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BaistClubAutomation.Pages
 {
+    using BaistClubAutomation.Pages.Manager;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+
     public class RecordScoreModel : PageModel
     {
-      
-        private readonly ScoringService _scoringService;
-        public RecordScoreModel(ScoringService scoringService) => _scoringService = scoringService;
+        private readonly IScoringService _scoringService;
+        private readonly IScoreManager _scoreManager;
+
+        public RecordScoreModel(IScoringService scoringService, IScoreManager scoreManager)
+        {
+            _scoringService = scoringService;
+            _scoreManager = scoreManager;
+        }
 
         [BindProperty]
-        public Score NewScore { get; set; } = new();
+        public Score ScoreEntry { get; set; }
 
-        public void OnGet() { }
-      
+        public void OnGet()
+        {
+            // Initialization logic if needed
+        }
+
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid) return Page();
-
-          
-            switch (NewScore.TeeColor)
+            if (!ModelState.IsValid)
             {
-                case "Blue": NewScore.CourseRating = 70.9; NewScore.SlopeRating = 127; break;
-                case "White": NewScore.CourseRating = 68.8; NewScore.SlopeRating = 123; break;
-                case "Red": NewScore.CourseRating = 66.2; NewScore.SlopeRating = 116; break;
+                return Page();
             }
 
-            bool success = _scoringService.AddPlayerScore(NewScore);
-            if (success) return RedirectToPage("/HandicapHistory", new { memberNumber = NewScore.MemberNumber });
+            // 1. Business Logic Check: Ensure total matches the sum of hole scores
+            int calculatedTotal = ScoreEntry.HoleScores.Sum();
+            if (calculatedTotal != ScoreEntry.TotalScore)
+            {
+                ModelState.AddModelError("ScoreEntry.TotalScore", "The total score does not match the hole-by-hole sum.");
+                return Page();
+            }
+
+            // 2. Data Access: Save the record to SQL Server (sarumugam3)
+            // Assume MemberId is retrieved from the logged-in user's session
+            int currentMemberId = 123;
+            bool success = _scoreManager.AddScore(currentMemberId, ScoreEntry);
+
+            if (success)
+            {
+                TempData["Message"] = "Score successfully recorded and handicap updated.";
+                return RedirectToPage("HandicapReport");
+            }
 
             return Page();
         }

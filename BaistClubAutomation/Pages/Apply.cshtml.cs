@@ -1,7 +1,8 @@
+using BaistClubAutomation.Pages.BLL;
+using BaistClubAutomation.Pages.Manager;
+using BaistClubAutomation.Pages.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BaistClubAutomation.Pages.Models;
-using BaistClubAutomation.Pages.BLL;
 
 namespace BaistClubAutomation.Pages
 {
@@ -58,5 +59,6 @@ namespace BaistClubAutomation.Pages
             Applicant = new ProspectiveMember();
             return Page();
         }
+       
     }
 }

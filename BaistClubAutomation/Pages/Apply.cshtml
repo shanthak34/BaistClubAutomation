@@ -91,10 +91,17 @@
                         <input asp-for="Applicant.DateOfBirth" class="form-control" type="date" />
                         <span asp-validation-for="Applicant.DateOfBirth" class="text-danger"></span>
                     </div>
-                    <div class="col-md-6">
-                        <label asp-for="Applicant.SponsorID" class="form-label">Sponsor Member ID</label>
-                        <input asp-for="Applicant.SponsorID" class="form-control" />
-                        <span asp-validation-for="Applicant.SponsorID" class="text-danger"></span>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label asp-for="Applicant.Sponsor1ID" class="form-label">Primary Sponsor ID (Shareholder)</label>
+                            <input asp-for="Applicant.Sponsor1ID" class="form-control" />
+                            <span asp-validation-for="Applicant.Sponsor1ID" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Applicant.Sponsor2ID" class="form-label">Secondary Sponsor ID (Shareholder)</label>
+                            <input asp-for="Applicant.Sponsor2ID" class="form-control" />
+                            <span asp-validation-for="Applicant.Sponsor2ID" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
 

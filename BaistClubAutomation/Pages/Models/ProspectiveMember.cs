@@ -38,7 +38,8 @@ namespace BaistClubAutomation.Pages.Models
         public string CompanyName { get; set; }
 
         public int SponsorID { get; set; } // Required for private club referral logic
-
+        public int Sponsor1ID { get; set; }
+        public int Sponsor2ID { get; set; }
         public DateTime ApplicationDate { get; set; } = DateTime.Now;
 
         public string ApplicationStatus { get; set; } = "Pending";

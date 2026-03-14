@@ -2,26 +2,77 @@
 @model BaistClubAutomation.Pages.RecordScoreModel
 @{
 }
+@page
+@model RecordScoreModel
+@{
+    ViewData["Title"] = "Record Player Score";
+}
+
+<h2>Record Player Score</h2>
+
 <form method="post">
-    <div class="form-group">
-        <label>Member Number</label>
-        <input asp-for="NewScore.MemberNumber" class="form-control" />
+    <div class="row mb-3">
+        <div class="col">
+            <label>Date of Round</label>
+            <input asp-for="ScoreEntry.Date" type="date" class="form-control" required />
+        </div>
+        <div class="col">
+            <label>Golf Course</label>
+            <input asp-for="ScoreEntry.CourseName" type="text" class="form-control" placeholder="Club BAIST" required />
+        </div>
     </div>
-    <div class="form-group">
-        <label>Date Played</label>
-        <input asp-for="NewScore.DatePlayed" type="date" class="form-control" />
+
+    <div class="row mb-4">
+        <div class="col">
+            <label>Course Rating</label>
+            <input asp-for="ScoreEntry.CourseRating" type="number" step="0.1" class="form-control" placeholder="70.9" required />
+        </div>
+        <div class="col">
+            <label>Slope Rating</label>
+            <input asp-for="ScoreEntry.SlopeRating" type="number" class="form-control" placeholder="127" required />
+        </div>
     </div>
-    <div class="form-group">
-        <label>Tee Played</label>
-        <select asp-for="NewScore.TeeColor" class="form-control">
-            <option value="Blue">Blue (Men: 70.9 / 127)</option>
-            <option value="White">White (Men: 68.8 / 123)</option>
-            <option value="Red">Red (Men: 66.2 / 116)</option>
-        </select>
+
+    <h4>Scorecard Details</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    @for (int i = 1; i <= 9; i++) { <th>@i</th> }
+                    <th>OUT</th>
+                    @for (int i = 10; i <= 18; i++) { <th>@i</th> }
+                    <th>IN</th>
+                    <th>TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @for (int i = 0; i < 18; i++)
+                    {
+                        if (i == 9) { <td><input type="text" id="outTotal" class="form-control" readonly /></td> }
+                        <td>
+                            <input asp-for="ScoreEntry.HoleScores[i]" class="form-control hole-input" type="number" min="1" max="15" required />
+                        </td>
+                    }
+                    <td><input type="text" id="inTotal" class="form-control" readonly /></td>
+                    <td><input asp-for="ScoreEntry.TotalScore" type="number" id="grandTotal" class="form-control" readonly /></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="form-group">
-        <label>Total Gross Score</label>
-        <input asp-for="NewScore.TotalGrossScore" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-success mt-3">Record Score</button>
+
+    <button type="submit" class="btn btn-primary mt-3">Submit Score</button>
 </form>
+
+@section Scripts {
+    <script>
+        
+        $(".hole-input").on("input", function() {
+            let total = 0;
+            $(".hole-input").each(function() {
+                total += Number($(this).val()) || 0;
+            });
+            $("#grandTotal").val(total);
+        });
+    </script>
+}

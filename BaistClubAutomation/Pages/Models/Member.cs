@@ -37,9 +37,10 @@ namespace BaistClubAutomation.Pages.Models
 
             [Required, StringLength(50)]
             public string MembershipType { get; set; } = string.Empty; // Gold, Silver, Bronze, etc.
+        [Required, StringLength(50)]
+        public string MembershipLevel { get; set; } = string.Empty;
 
-           
-        }
+    }
     }
 
 

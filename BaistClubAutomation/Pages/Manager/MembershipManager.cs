@@ -42,6 +42,17 @@ namespace BaistClubAutomation.Pages.Manager
             int maxId = _context.Members.Select(m => (int?)m.MemberNumber).Max() ?? 1000;
             return maxId + 1;
         }
+        public bool IsDuplicateEmail(string email)
+        {
+            return _context.ProspectiveMembers.Any(p => p.Email == email);
+        }
+
+        public bool IsActiveShareholder(int memberNumber)
+        {
+            // A Shareholder is a specific MembershipLevel in your Members table
+            return _context.Members.Any(m => m.MemberNumber == memberNumber
+                                         && m.MembershipLevel == "Shareholder");
+        }
         public ProspectiveMember GetApplicantById(int id)
         {
             // Uses Entity Framework's Find method to locate the record by Primary Key

@@ -1,41 +1,47 @@
 ﻿using BaistClubAutomation.Pages.Data;
 using BaistClubAutomation.Pages.Models;
+using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
+using System.Data;
 
 namespace BaistClubAutomation.Pages.Manager
 {
-    public class ScoreManager
+   
+
+    public class ScoreManager : IScoreManager
     {
-        private readonly ApplicationDbContext _context;
+        private readonly string _connectionString = "Your_sarumugam3_Connection_String";
 
-        public ScoreManager(ApplicationDbContext context) => _context = context;
+        public List<Score> GetLast20Scores(int memberId)
+        {
+            List<Score> scores = new List<Score>();
 
-        public bool AddScore(Score score)
-        {
-            _context.Scores.Add(score);
-            return _context.SaveChanges() > 0;
-        }
-        public bool CheckMemberExists(int memberNumber)
-        {
-            // Checks the Members table for a matching ID
-            return _context.Members.Any(m => m.MemberNumber == memberNumber);
-        }
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                // SQL query to get only the top 20 most recent rounds for this member
+                string query = @"SELECT TOP 20 TotalScore, CourseRating, SlopeRating, RoundDate 
+                             FROM PlayerScores 
+                             WHERE MemberId = @MemberId 
+                             ORDER BY RoundDate DESC";
 
-        public List<double> GetRecentDifferentials(int memberNumber, int count)
-        {
-            return _context.Scores
-                .Where(s => s.MemberNumber == memberNumber)
-                .OrderByDescending(s => s.DatePlayed)
-                .Take(count)
-                .Select(s => s.HandicapDifferential)
-                .ToList();
-        }
-        public List<Score> GetRecentScores(int memberNumber, int count)
-        {
-            return _context.Scores
-                .Where(s => s.MemberNumber == memberNumber)
-                .OrderByDescending(s => s.DatePlayed) // Most recent rounds first
-                .Take(count)
-                .ToList();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MemberId", memberId);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    scores.Add(new Score
+                    {
+                        TotalScore = reader.GetDouble(0),
+                        CourseRating = reader.GetDouble(1),
+                        SlopeRating = reader.GetDouble(2),
+                        RoundDate = reader.GetDateTime(3)
+                    });
+                }
+            }
+            return scores;
         }
     }
 }
