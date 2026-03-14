@@ -65,20 +65,20 @@ namespace BaistClubAutomation.Pages.Manager
             var applicant = _context.ProspectiveMembers.Find(id);
             if (applicant == null) return false;
 
-            applicant.ApplicationStatus = status; // "Approved" or "Rejected"
+            applicant.ApplicationStatus = status;
             applicant.CommitteeReviewDate = DateTime.Now;
             applicant.ApprovalNotes = notes;
 
             if (status == "Approved")
             {
-                // Move to the Members table
                 var newMember = new Member
                 {
-                    MemberNumber = GenerateNewNumber(), // Logic to get next ID
+                    MemberNumber = GenerateNewNumber(),
                     FirstName = applicant.FirstName,
                     LastName = applicant.LastName,
-                    MembershipType = applicant.DesiredTier,
-                    Email=applicant.Email,
+                    Email = applicant.Email,
+                   
+                    MembershipLevel = applicant.DesiredTier,
                     Status = "Active",
                     JoinDate = DateTime.Now,
                     UpdatedAt = DateTime.Now

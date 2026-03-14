@@ -13,7 +13,7 @@ namespace BaistClubAutomation.Pages.Manager
 
     public class ScoreManager : IScoreManager
     {
-        private readonly string _connectionString = "Server=your_server;Database=sarumugam3;User Id=sarumugam3;Password=your_password;TrustServerCertificate=True;";
+        private readonly string _connectionString = "Server=dev1.baist.ca;Database=sarumugam3;User Id=sarumugam3;Password=Shaajan@1;TrustServerCertificate=True;";
 
         public bool CheckMemberExists(int memberNumber)
         {

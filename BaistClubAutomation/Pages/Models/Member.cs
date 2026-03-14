@@ -1,46 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BaistClubAutomation.Pages.Models
 {
     public class Member
     {
-
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)] // MemberNumber is assigned, not identity
         public int MemberNumber { get; set; }
+        public required string FirstName { get; set; }
+        public required string LastName { get; set; }
+        public required string? Email { get; set; }
 
-        [Required, StringLength(50)]
-        public string FirstName { get; set; } 
+        // This must match the SQL column name exactly
+        public string MembershipLevel { get; set; } = "Associate";
 
-        [Required, StringLength(50)]
-        public string LastName { get; set; } 
-
-        [Required, EmailAddress, StringLength(100)]
-        public string Email { get; set; } 
-
-       
-
-        public bool IsShareholder { get; set; } 
-
-        public DateTime JoinDate { get; set; } 
-
-        public string Status { get; set; } = "Active"; 
-
-        [Column(TypeName = "decimal(4,1)")]
-        public decimal HandicapIndex { get; set; } 
-
+        public string Status { get; set; } = "Active";
+        public DateTime JoinDate { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
-       
-
-           
-
-            [Required, StringLength(50)]
-            public string MembershipType { get; set; } = string.Empty; // Gold, Silver, Bronze, etc.
-        [Required, StringLength(50)]
-        public string MembershipLevel { get; set; } = string.Empty;
-
+        public decimal HandicapIndex { get; set; }
     }
-    }
-
-
+}

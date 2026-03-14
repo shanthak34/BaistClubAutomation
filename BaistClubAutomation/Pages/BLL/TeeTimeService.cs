@@ -38,7 +38,7 @@ namespace BaistClubAutomation.Pages.BLL
             int daysLeadTime = (reservationDate.Date - DateTime.Today).Days;
 
             // 3. Enforce business rules
-            if (member.MembershipType == "Shareholder")
+            if (member.MembershipLevel == "Shareholder")
             {
                 // Shareholders get a 7-day window
                 return daysLeadTime >= 0 && daysLeadTime <= 7;
